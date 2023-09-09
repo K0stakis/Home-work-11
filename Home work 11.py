@@ -2,14 +2,9 @@
 # тільки обʼєкти класу int або float
 
 class Point:
-    x = 0
-    y = 0
     def __init__(self, x, y):
-        if isinstance(x, (int, float)) and isinstance(y, (int, float)):
-            self.x = x
-            self.y = y
-        else:
-            raise TypeError
+        self.x = x
+        self.y = y
     @property
     def x(self):
         return self.__x
@@ -35,9 +30,9 @@ class Point:
     def __str__(self):
         return f'Point [{self.__x}:{self.__y}]'
 
-point_1 = Point(1,8)
-point_2 = Point(2,4)
-point_3 = Point(4,6)
+point_1 = Point(2,8)
+point_2 = Point(6,4)
+point_3 = Point(9,6)
 
 
 # 2) Створіть класс Triangle (трикутник), який задається (ініціалізується) трьома точками
@@ -89,22 +84,53 @@ line_3 = Line(point_3, point_1)
 
 
 class Triangle:
-    line1 = None
-    line2 = None
-    line3 = None
     def __init__(self, line1, line2, line3):
         if isinstance(line1, Line) and isinstance(line2, Line) and isinstance(line3, Line):
-            self.line1 = line1.length
-            self.line2 = line2.length
-            self.line3 = line3.length
+            self._line1 = line1
+            self._line2 = line2
+            self._line3 = line3
         else:
             raise TypeError
-    def semi_perimeter(self):
-        return (self.line1 + self.line2 + self.line3) / 2
 
+    @property
+    def line1(self):
+        return self._line1
+
+    @line1.setter
+    def line1(self, value):
+        if not isinstance(value, Line):
+            raise TypeError
+        self._line1 = value
+
+    @property
+    def line2(self):
+        return self._line2
+
+    @line2.setter
+    def line2(self, value):
+        if not isinstance(value, Line):
+            raise TypeError
+        self._line2 = value
+
+    @property
+    def line3(self):
+        return self._line3
+
+    @line3.setter
+    def line3(self, value):
+        if not isinstance(value, Line):
+            raise TypeError
+        self._line3 = value
+
+    def semi_perimeter(self):
+        if line_1.end == line_2.begin and line_2.end == line_3.begin and line_3.end == line_1.begin:
+            return (self.line1.length + self.line2.length + self.line3.length) / 2
+        else:
+            print("The ends of the lines do not match!")
+            raise NameError
     def area(self):
         s = self.semi_perimeter()
-        res = (s * (s - self.line1) * (s - self.line2) * (s - self.line3)) ** 0.5
+        res = (s * (s - self.line1.length) * (s - self.line2.length) * (s - self.line3.length)) ** 0.5
         return res
 
     def __str__(self):
